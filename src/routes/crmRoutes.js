@@ -1,23 +1,24 @@
+import {addNewContact, getContacts,getContactWithId, updateContact, deleteContact} from '../controllers/crmController'
+
 const routes =  (app) => {
     app.route(`/contact`)
+    //GET all contacts from database as array
     .get( (req,res, next) =>{
+        // middleware
         console.log(`Request from: ${req.originalUrl}`)
         console.log(`Request from: ${req.method}`)
         next();
-    }, (req, res, next)=> {
-        res.send('GET request successful!');
-    })
-
-    .post( (req,res)=>
-        res.send('POST request successful!'));
+    }, getContacts)
+    //POST endpoint
+    .post( addNewContact);
 
 
     app.route(`/contact/:contactId`)
-    .put( (req,res) =>
-        res.send('PUT request successful!'))
-
-    .delete( (req,res)=>
-        res.send('DELETE request successful!'))
+    .get(getContactWithId)
+    //PUT contact by ID
+    .put(updateContact)
+    //DEL contact by ID
+    .delete(deleteContact)
 }
 
 export default routes;
